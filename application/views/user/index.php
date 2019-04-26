@@ -43,7 +43,7 @@
                                 <td><?= $usr['noTlp']; ?></td>
                                 <td><?= $usr['pekerjaan']; ?></td>
                                 <td><img src="<?php echo base_url().'assets/gambar/'.$usr['photo'] ?>"/ width="40" height="40"></td>
-                                <td><a href="<?php echo base_url() . 'users/hapus/' . $usr['id']; ?>" class="btn btn-danger btn-sm"><span class="fa fa-close"></span> Hapus</a></td>
+                                <td><a href="<?php echo base_url() . 'users/hapus/' . $usr['id']; ?>" class="btn btn-danger btn-sm  tombol-hapus"><span class="fa fa-close"></span> Hapus</a></td>
                             </tr>
                         <?php endforeach; ?>
 

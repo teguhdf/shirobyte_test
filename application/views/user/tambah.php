@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <input type="file" name="userfile" />
                                 <small style="color:red;margin-top:5px"><?php echo $error; ?></small>
-                                <small class="form-text text-danger"><?= form_error('userfile'); ?></small>
+                                
                             </div>
                           </div>
                         </div>

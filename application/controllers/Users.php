@@ -65,9 +65,7 @@ class Users extends CI_Controller
       $this->form_validation->set_rules('pekerjaan', 'Pekerjaan', 'required',[
         'required' => 'tolong pilih bro'
       ]);
-      $this->form_validation->set_rules('userfile', 'Userfile', 'required',[
-        'required' => 'jangan lupa upload poto bro'
-      ]);
+      
 
       if ($this->form_validation->run() == false) {
           $this->load->view('templates/header', $data);
