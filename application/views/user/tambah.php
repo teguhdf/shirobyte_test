@@ -8,7 +8,7 @@
                     Form Tambah Data Mahasiswa
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="<?php echo base_url().'users/aksi_tambah' ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text" name="nama" class="form-control" id="nama">
@@ -34,19 +34,24 @@
                             <small class="form-text text-danger"><?= form_error('noTlp'); ?></small>
                         </div>
                         <div class="form-group">
-                            <label class="radio-inline"><input type="radio" name="gender" value="pria">Pria</label>
-                            <label class="radio-inline"><input type="radio" name="gender" value="wanita">Wanita</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="pria" >Pria</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="wanita" >Wanita</label>
+                            <small class="form-text text-danger"><?= form_error('gender'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="pekerjaan">Pekerjaan</label>
-                            <select class="form-control" id="pekerjaan" name="pekerjaan">
+                            <select name="pekerjaan" class="form-control" id="pekerjaan" >
+                                <option value="">-- Pilih --</option>
                                 <option value="karyawan swasta">Karyawan swasta</option>
                                 <option value="pegawai negri">Pegawai negri</option>
                                 <option value="belum bekerja">Belum bekerja</option>
                             </select>
+                            <small class="form-text text-danger"><?= form_error('pekerjaan'); ?></small>
                         </div>
                         <div class="form-group">
-                            <input type="file" name="berkas" />
+                            <input type="file" name="userfile" />
+                            <small style="color:red;margin-top:5px"><?php echo $error; ?></small>
+                            <small class="form-text text-danger"><?= form_error('userfile'); ?></small>
                         </div>
                         <button type="submit" name="tambah" class="btn btn-primary float-right">Tambah Data</button>
                     </form>

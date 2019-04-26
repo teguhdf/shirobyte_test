@@ -8,9 +8,8 @@ class User_model extends CI_model
         return $this->db->get('users')->result_array();
     }
 
-    public function tambahDataUser()
+    public function tambahDataUser($img)
     {
-
         $data = [
             "nama" => $this->input->post('nama', true),
             "email" => $this->input->post('email', true),
@@ -18,7 +17,7 @@ class User_model extends CI_model
             "gender" => $this->input->post('gender', true),
             "noTlp" => $this->input->post('noTlp', true),
             "pekerjaan" => $this->input->post('pekerjaan', true),
-            "photo" => 'assets/user.png',
+            "photo" => $img,
         ];
 
         $this->db->insert('users', $data);

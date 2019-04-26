@@ -19,25 +19,16 @@ class Users extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    function do_upload()
+    public function tambah()
     {
-        $config['upload_path'] = "./assets/images";
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['encrypt_name'] = TRUE;
-
-
-        if ($this->upload->do_upload("file")) {
-            $data = array('upload_data' => $this->upload->data());
-
-
-            $image = $data['upload_data']['file_name'];
-
-            $result = $this->User_model->tambahDataUser($image);
-            return json_decode($result);
-        }
+        $data['judul'] = 'Form Tambah Data User';
+        $result['error'] = '';
+        $this->load->view('templates/header', $data);
+        $this->load->view('user/tambah',$result);
+        $this->load->view('templates/footer');
     }
 
-    public function aksi_upload()
+    private function _aksi_upload()
     {
         $config['upload_path']          = './assets/gambar/';
         $config['allowed_types']        = 'gif|jpg|png';
@@ -47,44 +38,59 @@ class Users extends CI_Controller
 
         $this->load->library('upload', $config);
 
-        if (!$this->upload->do_upload('berkas')) {
+        if (!$this->upload->do_upload('userfile')) {
             $error = array('error' => $this->upload->display_errors());
-            $this->load->view('user/tambah', $error);
+            return $error;
         } else {
-            $data = array('upload_data' => $this->upload->data());
-            $image = $data['upload_data']['file_name'];
+            $result = array('upload_data' => $this->upload->data());
+            return $result;
         }
-        var_dump($image);
-        die;
     }
 
+    public function aksi_tambah(){
+      $data['judul'] = 'Form Tambah Data User';
+      $data['error'] = '';
 
-    public function tambah()
-    {
-        $data['judul'] = 'Form Tambah Data User';
+      $this->form_validation->set_rules('nama', 'Nama', 'required');
+      $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+      $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[3]|matches[password2]', [
+          'matches' => 'Password dont match!',
+          'min_length' => 'Password too short!'
+      ]);
+      $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
+      $this->form_validation->set_rules('gender', 'Gender', 'required',[
+        'required' => 'tolong pilih gender'
+      ]);
+      $this->form_validation->set_rules('noTlp', 'No Telepon', 'required|numeric');
+      $this->form_validation->set_rules('pekerjaan', 'Pekerjaan', 'required',[
+        'required' => 'tolong pilih bro'
+      ]);
+      $this->form_validation->set_rules('userfile', 'Userfile', 'required',[
+        'required' => 'jangan lupa upload poto bro'
+      ]);
 
-        $this->form_validation->set_rules('nama', 'Nama', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[3]|matches[password2]', [
-            'matches' => 'Password dont match!',
-            'min_length' => 'Password too short!'
-        ]);
-        $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
-        $this->form_validation->set_rules('gender', 'Gender', 'required');
-        $this->form_validation->set_rules('noTlp', 'No Telepon', 'required');
-        $this->form_validation->set_rules('pekerjaan', 'Pekerjaan', 'required');
-        // $this->form_validation->set_rules('photo', 'Photo', 'required');
+      if ($this->form_validation->run() == false) {
+          $this->load->view('templates/header', $data);
+          $this->load->view('user/tambah',$data);
+          $this->load->view('templates/footer');
+      } else {
 
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('user/tambah');
-            $this->load->view('templates/footer');
-        } else {
+        $file = $this->_aksi_upload();
 
-            $this->User_model->tambahDataUser();
-            $this->session->set_flashdata('flash', 'Ditambahkan');
-            redirect('users');
+        if ($file['error']) {
+          $result['error'] = $file['error'];
+          $this->load->view('templates/header', $data);
+          $this->load->view('user/tambah',$result);
+          $this->load->view('templates/footer');
+
+        }else{
+          $file = $this->_aksi_upload();
+          $img = $file['upload_data']['file_name'];
+          $this->User_model->tambahDataUser($img);
+          $this->session->set_flashdata('flash', 'Ditambahkan');
+          redirect('users');
         }
+      }
     }
 
     public function hapus($id)

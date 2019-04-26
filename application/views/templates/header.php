@@ -11,7 +11,7 @@
 
   <!-- My CSS -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
 
   <title><?php echo $judul; ?>
   </title>

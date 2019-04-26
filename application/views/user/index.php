@@ -1,17 +1,5 @@
 <div class="container">
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
-    <?php if ($this->session->flashdata('flash')) : ?>
-        <!-- <div class="row mt-3">
-                                                                                                            <div class="col-md-6">
-                                                                                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                                                                                    Data mahasiswa <strong>berhasil</strong> <?= $this->session->flashdata('flash'); ?>.
-                                                                                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                                                                                        <span aria-hidden="true">&times;</span>
-                                                                                                                    </button>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div> -->
-    <?php endif; ?>
 
     <div class="row mt-3">
         <div class="col-md-6">
@@ -35,7 +23,6 @@
                             <th scope="col">No</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Password</th>
                             <th scope="col">Gender</th>
                             <th scope="col">No Telepon</th>
                             <th scope="col">Pekerjaan</th>
@@ -52,11 +39,10 @@
                                 <td><?= $no++; ?></td>
                                 <td><?= $usr['nama']; ?></td>
                                 <td><?= $usr['email']; ?></td>
-                                <td><?= $usr['password']; ?></td>
                                 <td><?= $usr['gender']; ?></td>
                                 <td><?= $usr['noTlp']; ?></td>
                                 <td><?= $usr['pekerjaan']; ?></td>
-                                <td><?= $usr['photo']; ?></td>
+                                <td><img src="<?php echo base_url().'assets/gambar/'.$usr['photo'] ?>"/ width="40" height="40"></td>
                                 <td><a href="<?php echo base_url() . 'users/hapus/' . $usr['id']; ?>" class="btn btn-danger btn-sm"><span class="fa fa-close"></span> Hapus</a></td>
                             </tr>
                         <?php endforeach; ?>
